@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [1.11.1] - 2026-10-11
+
+### Bug fixes 🐛
+
+- fix(theme): keep collapsed dark sidebar column transparent ([477e66e](https://github.com/nicopasla/better-intra/commit/477e66e))
+
 ## [1.11.0] - 2026-10-11
 
 ### Features 🎉
