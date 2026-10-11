@@ -19,7 +19,7 @@ function isAlwaysEnabledFeature(f: (typeof FEATURE_DEFS)[number]): boolean {
   return (
     f.id === "about" ||
     f.id === "appearance" ||
-    f.id === "discord" ||
+    f.id === "notifications" ||
     f.id === "calendar" ||
     f.id === "advanced" ||
     f.id === "account" ||

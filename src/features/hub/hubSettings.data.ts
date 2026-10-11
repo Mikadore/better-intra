@@ -3,7 +3,7 @@ import CALENDAR from "../../assets/svg/calendar.svg?raw";
 import USER from "../../assets/svg/user.svg?raw";
 import SHORTCUT from "../../assets/svg/shortcut.svg?raw";
 import ABOUT from "../../assets/svg/about.svg?raw";
-import DISCORD_SVG from "../../assets/svg/discord.svg?raw";
+import BELL_SVG from "../../assets/svg/bell.svg?raw";
 import ADVANCED_SVG from "../../assets/svg/advanced.svg?raw";
 import USER_COG_SVG from "../../assets/svg/user-cog.svg?raw";
 import GRID_SVG from "../../assets/svg/grid.svg?raw";
@@ -63,10 +63,10 @@ export const FEATURE_DEFS = [
     cols: 3,
   },
   {
-    id: "discord",
-    name: "Discord",
-    icon: DISCORD_SVG,
-    desc: "Get evaluation reminders via Discord DM.",
+    id: "notifications",
+    name: "Notifications",
+    icon: BELL_SVG,
+    desc: "Get evaluation reminders via Discord DM or the mobile app.",
   },
   {
     id: "calendar",
@@ -114,7 +114,7 @@ export type SettingKind =
   | "about"
   | "card-order"
   | "action"
-  | "discord-panel"
+  | "notifications-panel"
   | "calendar-panel"
   | "theme-accent"
   | "rainbow-palette"
@@ -625,12 +625,12 @@ export const HUB_SETTING_DEFS: Record<FeatureId, readonly HubSettingDef[]> = {
       colSpan: 2,
     },
   ],
-  discord: [
+  notifications: [
     {
-      feature: "discord",
-      label: "Discord",
-      desc: "Notifications and account connection.",
-      kind: "discord-panel",
+      feature: "notifications",
+      label: "Notifications",
+      desc: "Discord and mobile push notifications.",
+      kind: "notifications-panel",
       fullWidth: true,
     },
   ],

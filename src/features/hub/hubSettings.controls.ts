@@ -33,13 +33,10 @@ import CHEVRON_DOWN_SVG from "../../assets/svg/chevron-down.svg?raw";
 import SUNSET_SVG from "../../assets/svg/sunset.svg?raw";
 import SUNRISE_SVG from "../../assets/svg/sunrise.svg?raw";
 import { exportableSettings, sanitizeBackup } from "./backup.ts";
-import { renderDiscordPanel } from "../discord/discord.ui.ts";
+import { renderNotificationsPanel } from "../notifications/notifications.ui.ts";
 import { renderCalendarPanel } from "../calendar/calendar.ui.ts";
 import { openThemeEditor } from "../profile/theme/theme-editor.ts";
-import {
-  applyThemePreset,
-  THEMES,
-} from "../profile/theme/theme-manager.ts";
+import { applyThemePreset, THEMES } from "../profile/theme/theme-manager.ts";
 import { openCommunityThemesDialog } from "../profile/theme/community-dialog.ts";
 import {
   getCustoms,
@@ -210,8 +207,9 @@ function renderThemeAccentControl(
     const c = customs.find((x) => x.id === id);
     if (c) return contrastText(bgFor(id));
     const lightness = parseInt(
-      (options.find((o) => o.value === id)?.color ?? "0 0% 50%").split(" ")[2] ??
-        "50",
+      (options.find((o) => o.value === id)?.color ?? "0 0% 50%").split(
+        " ",
+      )[2] ?? "50",
     );
     return lightness > 50 ? "hsl(0 0% 10%)" : "hsl(0 0% 100%)";
   };
@@ -398,19 +396,16 @@ function renderThemeAccentControl(
 
   const isDarkNow = () => document.documentElement.classList.contains("dark");
 
-  const sunChip = (
-    kind: "sunset" | "sunrise",
-    time: string,
-    active: boolean,
-  ) => html`<span
-    style="display:inline-flex; align-items:center; gap:0.2rem; padding:0.05rem 0.4rem; border-radius:0.6rem; border:1.5px solid ${active
-      ? "currentColor"
-      : "transparent"};"
-  >
-    <span style="display:inline-flex; width:0.85rem; height:0.85rem;"
-      >${unsafeHTML(kind === "sunset" ? SUNSET_SVG : SUNRISE_SVG)}</span
-    >${time}
-  </span>`;
+  const sunChip = (kind: "sunset" | "sunrise", time: string, active: boolean) =>
+    html`<span
+      style="display:inline-flex; align-items:center; gap:0.2rem; padding:0.05rem 0.4rem; border-radius:0.6rem; border:1.5px solid ${active
+        ? "currentColor"
+        : "transparent"};"
+    >
+      <span style="display:inline-flex; width:0.85rem; height:0.85rem;"
+        >${unsafeHTML(kind === "sunset" ? SUNSET_SVG : SUNRISE_SVG)}</span
+      >${time}
+    </span>`;
 
   const draw = () => {
     render(
@@ -438,13 +433,19 @@ function renderThemeAccentControl(
                     : ""}
                   <div class="flex flex-wrap gap-1">
                     ${s.items.map((o) =>
-                      swatch(o.value!, o.value === selected, "#ffffff", () =>
-                        void selectTheme(o.value!),
+                      swatch(
+                        o.value!,
+                        o.value === selected,
+                        "#ffffff",
+                        () => void selectTheme(o.value!),
                       ),
                     )}
                     ${mines.map((c) =>
-                      mineSwatch(c, c.id === selected, "#ffffff", () =>
-                        void selectTheme(c.id),
+                      mineSwatch(
+                        c,
+                        c.id === selected,
+                        "#ffffff",
+                        () => void selectTheme(c.id),
                       ),
                     )}
                   </div>
@@ -471,7 +472,11 @@ function renderThemeAccentControl(
                     ? "opacity:0.7;"
                     : "opacity:0.4; filter:grayscale(1);"}"
                 >
-                  ${sunChip("sunset", sunTimes.sunset, isSchedule && isDarkNow())}
+                  ${sunChip(
+                    "sunset",
+                    sunTimes.sunset,
+                    isSchedule && isDarkNow(),
+                  )}
                   ${sunChip(
                     "sunrise",
                     sunTimes.sunrise,
@@ -936,7 +941,7 @@ function renderSettingControl(def: HubSettingDef, enabled: boolean) {
     return container;
   }
 
-  if (def.kind === "discord-panel") return renderDiscordPanel();
+  if (def.kind === "notifications-panel") return renderNotificationsPanel();
   if (def.kind === "calendar-panel") return renderCalendarPanel();
 
   return until(
@@ -1494,7 +1499,7 @@ function renderSetting(def: HubSettingDef, enabled: boolean, hidden?: boolean) {
   }
 
   if (
-    def.kind === "discord-panel" ||
+    def.kind === "notifications-panel" ||
     def.kind === "about" ||
     def.kind === "calendar-panel" ||
     def.kind === "feature-cards"

@@ -12,6 +12,7 @@ import ISSUES_SVG from "../../assets/svg/issues.svg?raw";
 import PERSON_FOLLOW_SVG from "../../assets/svg/person-follow.svg?raw";
 import PR_SVG from "../../assets/svg/pr.svg?raw";
 import STAR_SVG from "../../assets/svg/star.svg?raw";
+import SMARTPHONE_SVG from "../../assets/svg/smartphone.svg?raw";
 
 const QUICK_LINKS = [
   {
@@ -31,6 +32,12 @@ const QUICK_LINKS = [
     svg: PR_SVG,
     label: "PRs",
     color: "bg-accent text-accent-content",
+  },
+  {
+    href: "https://mobile.betterintra.com",
+    svg: SMARTPHONE_SVG,
+    label: "Mobile (PWA)",
+    color: "bg-info text-info-content",
   },
 ];
 
