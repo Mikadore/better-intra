@@ -68,6 +68,8 @@ Tests use Vitest with `jsdom` environment and global API. Run `npm test` (single
 
 The version is injected at build time as `__APP_VERSION__` (see `better-intra-pwa/vite.config.ts`) and shown in Settings → About & Debug. The extension package version is separate — do not bump it for PWA changes.
 
+**Do not bump the `better-intra-pwa` submodule pointer** in the parent repo's commits.
+
 ## Extension mechanics
 
 - Runs as a content script injected at `document_start` on `https://*.intra.42.fr/*`.
