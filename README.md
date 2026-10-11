@@ -1,6 +1,6 @@
 # Better Intra
 
-UI and UX improvements for 42 Intra v3: logtime calendar, cluster map tools, custom profiles, shortcuts, friends widget, and more.
+UI and UX improvements for 42 Intra v3: logtime calendar, cluster map tools, custom profiles, shortcuts, friends widget, a students directory, evaluation notifications (Discord & mobile), and more.
 
 
 ## ⚡ Quick Start
@@ -159,13 +159,25 @@ Subscribe to your 42 events in any calendar app with a private ICS subscription 
 
 ---
 
-### 🔔 Evaluations ☁️
+### 🔔 Notifications ☁️
 
-Discord DM notifications when your evaluations change state.
+Get evaluation reminders when your evaluations change state — via Discord DM or the mobile app.
 
-* **Discord DMs** — receive alerts in your DMs via the Better Intra bot when an evaluation is booked or when correcteds are revealed. Connect your Discord account from the Discord hub tab — auto-joins **Le Bassin** server to enable direct messages.
+* **Discord DMs** — receive alerts in your DMs via the Better Intra bot when an evaluation is booked or when correcteds are revealed. Connect your Discord account from the Notifications hub tab — auto-joins **Le Bassin** server to enable direct messages.
+* **Mobile push** — install the [mobile app (PWA)](https://mobile.betterintra.com) to get the same evaluation notifications on your phone, plus your dashboard, friends, and students. Scan the QR code in the Notifications tab to install it.
 * **Quiet hours** — pause Discord notifications during specified hours (e.g. 22:00 to 08:00) so you're not disturbed at night.
-* Configure from the **Discord** tab in the Settings Hub.
+* Configure from the **Notifications** tab in the Settings Hub.
+
+---
+
+### 📱 Mobile App (PWA) ☁️
+
+An installable mobile web app at [mobile.betterintra.com](https://mobile.betterintra.com).
+
+* **Install to your home screen** — from Safari use Share → Add to Home Screen; from Chrome use the menu → Install app.
+* **Evaluation push notifications** — the same booked/revealed alerts as Discord, delivered to your phone.
+* **Dashboard, profile, friends, and students** — a mobile-friendly view of your 42 data, including the Belgium students directory.
+* **Easy install** — the extension's Settings Hub → **Notifications** tab shows a QR code and link to install it.
 
 ---
 
@@ -222,7 +234,7 @@ A friends panel accessible from a button in the bottom-right corner of the page.
 * All extension settings in one place.
 * Click the **gear icon** on the intra sidebar to open it.
 * **Search settings** — a search box in the hub header filters settings across all tabs and jumps to the first match.
-* Tabs: Appearance (Theme + Logtime), Add-ons, Profile, Shortcuts, Discord, Calendar, Advanced, About.
+* Tabs: Appearance (Theme + Logtime), Profile, Add-ons, Shortcuts, Notifications, Calendar, Advanced, Account, About.
 * Turn features on/off individually, or reset a feature's settings to default.
 * **Drag to reorder dashboard cards** — in the Profile tab, drag and drop cards (Logtime, Agenda, Evaluations, Projects, Achievements, Thursday Roulette) to reorder them on the dashboard. Toggle visibility with the eye icon, or reset to default order.
 * The footer bar shows your theme toggle, cloud connection status, and last sync badge. Manual/Auto push is configured in the Account tab (and the welcome screen), defaulting to Manual.
@@ -267,6 +279,7 @@ This is a personal project. It modifies the appearance of 42 Intra and adds UI i
 * Gemini and Copilot Student (Documentation & Optimization)
 * Cloudflare Workers, KV & D1 (Serverless backend for cloud sync, eval tracking & notifications)
 * [`better-intra-worker/`](./better-intra-worker/) — separate Cloudflare Worker handling cloud sync, evaluation state tracking, project map, and Discord bot
+* [`better-intra-pwa/`](./better-intra-pwa/) — installable mobile web app (PWA) at [mobile.betterintra.com](https://mobile.betterintra.com)
 * 42 API (OAuth2) (Secure user identification and authentication)
 * Discord API (Bot for evaluation notifications)
 * [OpenCode](https://opencode.ai) + DeepSeek V4 Pro (AI coding agent)
@@ -284,6 +297,7 @@ This is a personal project. It modifies the appearance of 42 Intra and adds UI i
 | Firefox |    ✅    | Main target |
 | Chrome  |    ✅    |  Supported  |
 |  Brave  |    ✅    |  Supported  |
+| Mobile (PWA) | ✅ | [mobile.betterintra.com](https://mobile.betterintra.com) |
 
 ## Privacy
 

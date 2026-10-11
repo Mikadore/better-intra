@@ -2,6 +2,49 @@
 
 ## [Unreleased]
 
+## [1.11.0] - 2026-10-11
+
+### Features 🎉
+
+- feat(hub): add Notifications tab with Discord and mobile PWA ([0b180f2](https://github.com/nicopasla/better-intra/commit/0b180f2))
+- feat(events): include description and subscriber counts in ICS ([ef0ead5](https://github.com/nicopasla/better-intra/commit/ef0ead5))
+- feat(sessions): dedupe per device and group session list ([fc5f7b8](https://github.com/nicopasla/better-intra/commit/fc5f7b8))
+- feat(students): add friends via long-press, drop copy-login ([d97fef3](https://github.com/nicopasla/better-intra/commit/d97fef3))
+- feat: regenerate extension icons from new glyph and bump pwa submodule ([8efe714](https://github.com/nicopasla/better-intra/commit/8efe714))
+- feat(friends): use ranking and direction-aware name sort icons ([f3baafb](https://github.com/nicopasla/better-intra/commit/f3baafb))
+- feat(hub): add external what's new changelog with sidebar icon ([9d344b2](https://github.com/nicopasla/better-intra/commit/9d344b2))
+- feat(themes): add community gallery, saved themes and scheduled light/dark ([39b8b3f](https://github.com/nicopasla/better-intra/commit/39b8b3f))
+- feat(themes): add like and hide functionality, update schema for likes and author_hash ([2b98774](https://github.com/nicopasla/better-intra/commit/2b98774))
+- feat(appearance): add 20 preset fonts and fix per-font previews in the hub ([b8aa068](https://github.com/nicopasla/better-intra/commit/b8aa068))
+- feat(appearance): add a percentage font-scale input beside the size presets ([3078e0d](https://github.com/nicopasla/better-intra/commit/3078e0d))
+- feat(themes): link community theme author to their intra profile ([3948169](https://github.com/nicopasla/better-intra/commit/3948169))
+- feat(logtime): replace tracker mode dropdown with theme-colored buttons ([705ecd2](https://github.com/nicopasla/better-intra/commit/705ecd2))
+- feat(appearance): group font settings into a single Fonts card ([efb86b4](https://github.com/nicopasla/better-intra/commit/efb86b4))
+- feat(appearance): add community theme gallery, scheduled dark/light mode and campus sun times ([113a375](https://github.com/nicopasla/better-intra/commit/113a375))
+- feat: confirm before switching back to v2 and rework confirm dialog buttons ([133ed78](https://github.com/nicopasla/better-intra/commit/133ed78))
+- feat(hub): cloud status icon with connected/offline/error states and connect action ([2cd7ac9](https://github.com/nicopasla/better-intra/commit/2cd7ac9))
+- feat(appearance): add per-component custom theme editor with preset overrides ([5a5e210](https://github.com/nicopasla/better-intra/commit/5a5e210))
+- feat(appearance): add global font size presets ([7c9032d](https://github.com/nicopasla/better-intra/commit/7c9032d))
+
+### Bug fixes 🐛
+
+- fix(sessions): only track last used for the logging-in session ([1c6e2c4](https://github.com/nicopasla/better-intra/commit/1c6e2c4))
+- fix(students): reliable long-press to add friends on touch ([9e831c0](https://github.com/nicopasla/better-intra/commit/9e831c0))
+- fix(changelog): keep all entries so older releases can be shown ([51eede0](https://github.com/nicopasla/better-intra/commit/51eede0))
+- fix(changelog): correct release versions and add older releases ([666e54f](https://github.com/nicopasla/better-intra/commit/666e54f))
+- fix(profile): show exact wallet, rank and score values from native tooltips (#14) ([cf2424d](https://github.com/nicopasla/better-intra/commit/cf2424d))
+- fix(confirm): green confirm buttons with a danger variant for destructive actions ([2338131](https://github.com/nicopasla/better-intra/commit/2338131))
+- fix(subjects): shrink subject-update badge and stop font-preset inflation ([2c012af](https://github.com/nicopasla/better-intra/commit/2c012af))
+- fix(friends): use ghost icon for empty states instead of filled circles ([953d63e](https://github.com/nicopasla/better-intra/commit/953d63e))
+- fix(font): force selected font over Intra hardcoded families ([2cf996e](https://github.com/nicopasla/better-intra/commit/2cf996e))
+
+### Other Changes 🔄
+
+- docs: clarify pwa version is bumped at commit time ([ff0cb30](https://github.com/nicopasla/better-intra/commit/ff0cb30))
+- revert(students): remove long-press add-friend ([d427f0f](https://github.com/nicopasla/better-intra/commit/d427f0f))
+- docs: add pwa versioning rule to agents guide ([a625bce](https://github.com/nicopasla/better-intra/commit/a625bce))
+- refactor(hub): split settings modal into modules and improve mobile responsiveness ([91f1785](https://github.com/nicopasla/better-intra/commit/91f1785))
+
 ## [1.10.0] - 2026-09-28
 
 ### Features 🎉
