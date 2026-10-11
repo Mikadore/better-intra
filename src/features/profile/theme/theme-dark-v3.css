@@ -54,7 +54,6 @@ html.dark .main-left-navbar {
 html.dark .bg-\[\#4E5566\],
 html.dark .bg-\[\#BA5959\],
 html.dark .bg-\[\#CE58CE\],
-html.dark .fixed.top-0.flex.flex-col.items-center.w-20.z-50,
 html.dark .fixed.top-0.flex.flex-col.items-center.w-20.z-50>* {
   background-color: hsl(var(--bi-sidebar, var(--card))) !important;
 }
