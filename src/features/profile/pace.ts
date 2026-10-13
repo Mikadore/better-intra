@@ -30,8 +30,8 @@ function formatDuration(totalMin: number): string {
 }
 
 function parseDays(el: SVGTextElement): number {
-  const m = el.textContent?.match(/(\d+)/);
-  return m ? parseInt(m[1], 10) : 0;
+  const m = el.textContent?.match(/-?\d+/);
+  return m ? parseInt(m[0], 10) : 0;
 }
 
 function applyDaysView(
@@ -47,14 +47,15 @@ function applyDaysView(
   const monoFont = "var(--font-sans)";
   countText.style.fontFamily = monoFont;
   totalText.style.fontFamily = monoFont;
+  const elapsedFraction = elapsed < 0 ? 1 : Math.min(1, elapsed / total);
   if (timeLeft) {
-    const remaining = Math.max(0, total - elapsed);
+    const remaining = total - elapsed;
     titleEl.textContent = "Time left";
     countText.textContent = `${remaining} days`;
     totalText.textContent = `Of ${total}`;
     path?.setAttribute(
       "stroke-dashoffset",
-      String(circumference * (remaining / total)),
+      String(circumference * (1 - elapsedFraction)),
     );
   } else {
     titleEl.textContent = "Elapsed time";
@@ -62,7 +63,7 @@ function applyDaysView(
     totalText.textContent = `On ${total}`;
     path?.setAttribute(
       "stroke-dashoffset",
-      String(circumference * (1 - elapsed / total)),
+      String(circumference * (1 - elapsedFraction)),
     );
   }
 }
