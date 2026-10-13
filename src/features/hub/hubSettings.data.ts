@@ -703,6 +703,13 @@ export const HUB_SETTING_DEFS: Record<FeatureId, readonly HubSettingDef[]> = {
             dependsOn: "PROFILE_V2_BLACKHOLE",
           },
         },
+        {
+          label: "Project page",
+          value: "PROJECT_PAGE_REDESIGN",
+          color: "info",
+          big: true,
+          desc: "Replaces the 42 project page with a cleaner Better Intra layout and compact stats.",
+        },
       ],
     },
   ],

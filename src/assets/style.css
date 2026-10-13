@@ -40,7 +40,8 @@
     "#ft-friend-btn-shadow", "#logtime-shadow-wrapper", "#popup-root",
     "#project-badges-shadow", "#cluster-map-dialog", "#profile-modal-host",
     "#better-intra-sort-host", "#ft-tracker-card", "#ft-transcript-dialog",
-    "#ft-star-total-host", "#ft-subject-update-host", "#welcome-shadow-wrapper";
+    "#ft-star-total-host", "#ft-subject-update-host", "#welcome-shadow-wrapper",
+    "#ft-project-page-host";
   themes: "light", "dark";
   include:
     [ "button",

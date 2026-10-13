@@ -1,23 +1,11 @@
 import { getConfig } from "../../config.ts";
 import { workerFetch } from "../../utils/worker.ts";
 import { hashLogin } from "../../utils/crypto.ts";
-import {
-  decide,
-  normalizeUrl,
-  parseSubjectLink,
-  formatShortDate,
-  formatRelativeTime,
-} from "./fingerprint.ts";
+import { decide, normalizeUrl, parseSubjectLink } from "./fingerprint.ts";
 import { renderSubjectBadge } from "./ui.ts";
+import { subjectBadgeInfo, type LocalSubjectState } from "./badge.ts";
 
 const CHECK_COOLDOWN_MS = 15 * 60 * 1000;
-
-interface LocalSubjectState {
-  lastUrl?: string;
-  versionDate?: number;
-  changedAt?: number;
-  checkedAt?: number;
-}
 
 type SubjectTrackerState = Record<string, LocalSubjectState>;
 
@@ -246,14 +234,7 @@ export function maybeRenderBadge(
   button: HTMLAnchorElement | null,
 ): void {
   if (!button) return;
-  const date = local.versionDate ?? local.changedAt;
-  if (!date) return;
-
-  const DAY = 86_400_000;
-  const age = Date.now() - date;
-  const recent = age <= 7 * DAY;
-  const tone: "error" | "warning" | "ghost" =
-    age <= 7 * DAY ? "error" : age <= 30 * DAY ? "warning" : "ghost";
-  const when = recent ? formatRelativeTime(date) : formatShortDate(date);
-  renderSubjectBadge(button, "Subject updated", when, tone);
+  const info = subjectBadgeInfo(local);
+  if (!info) return;
+  renderSubjectBadge(button, "Subject updated", info.when, info.tone);
 }

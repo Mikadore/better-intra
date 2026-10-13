@@ -9,6 +9,9 @@ export function renderSubjectBadge(
   when: string,
   tone: "warning" | "ghost" | "error" = "warning",
 ): void {
+  // The redesigned project page renders the badge itself in its header.
+  if (document.getElementById("ft-project-page-host")) return;
+
   const existing = document.getElementById(BADGE_ID);
   if (existing) existing.remove();
 

@@ -163,6 +163,9 @@ export interface BetterIntraConfig {
       checkedAt?: number;
     }
   >;
+
+  // Project Page
+  PROJECT_PAGE_REDESIGN: boolean;
 }
 
 /**
@@ -284,6 +287,7 @@ export const CONFIG_DEFAULT: BetterIntraConfig = {
   SUBJECT_TRACKER_STATE: {},
   SUBJECT_TRACKER_ENABLED: true,
   SUBJECT_TRACKER_SEND_DATA: true,
+  PROJECT_PAGE_REDESIGN: false,
 };
 
 /**
@@ -373,6 +377,7 @@ export const CLOUD_SYNC_KEYS: ConfigKey[] = [
   "ADVANCED_OPEN_LINKS_NEW_TAB",
   "CLOUD_SYNC_ENABLED",
   "TRACKER_MODE",
+  "PROJECT_PAGE_REDESIGN",
 ];
 
 export const VISUAL_CLOUD_KEYS: ConfigKey[] = [

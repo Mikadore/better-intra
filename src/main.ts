@@ -212,6 +212,9 @@ const featureInitializers: { [key: string]: () => Promise<void> } = {
           void import("./features/subjects/tracker.ts").then((m) =>
             m.initSubjectTracker(),
           );
+          void import("./features/project-page/project-page.ts").then((m) =>
+            m.initProjectPage(),
+          );
         }
 
         void import("./features/back-to-v2.ts").then((m) =>
