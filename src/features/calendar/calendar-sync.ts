@@ -1,9 +1,9 @@
 import { hashLogin } from "../../utils/crypto.ts";
 import { workerFetch } from "../../utils/worker.ts";
 
-
 function escapeIcs(text: string): string {
   return text
+    .replace(/\r\n?/g, "\n")
     .replace(/\\/g, "\\\\")
     .replace(/;/g, "\\;")
     .replace(/,/g, "\\,")
@@ -18,13 +18,17 @@ function formatIcsDate(iso: string): string {
     .replace(/\.\d{3}/, "");
 }
 
-function computeHash(events: { id: number; begin_at: string }[]): string {
+function computeHash(
+  events: { id: number; begin_at: string; description?: string }[],
+): string {
   let h = 0;
+  const mix = (s: string) => {
+    for (let i = 0; i < s.length; i++) h = ((h << 5) - h + s.charCodeAt(i)) | 0;
+  };
   for (const e of events) {
     h = ((h << 5) - h + e.id) | 0;
-    for (let i = 0; i < e.begin_at.length; i++) {
-      h = ((h << 5) - h + e.begin_at.charCodeAt(i)) | 0;
-    }
+    mix(e.begin_at);
+    mix(e.description ?? "");
   }
   return String(h);
 }
@@ -66,7 +70,9 @@ export function generateIcs(
       ev.location ? `LOCATION:${escapeIcs(ev.location)}` : "",
       ev.description ? `DESCRIPTION:${escapeIcs(ev.description)}` : "",
       ev.nbr_subscribers != null ? `X-SUBSCRIBERS:${ev.nbr_subscribers}` : "",
-      ev.max_subscribers != null ? `X-MAX-SUBSCRIBERS:${ev.max_subscribers}` : "",
+      ev.max_subscribers != null
+        ? `X-MAX-SUBSCRIBERS:${ev.max_subscribers}`
+        : "",
       `URL:${url}`,
       "BEGIN:VALARM",
       "TRIGGER:-PT15M",
