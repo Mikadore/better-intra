@@ -3,7 +3,7 @@ import { getConfig } from "../../config.ts";
 import { adoptShadowCss } from "../../utils/shadow-styles.ts";
 import { ensureDocumentStyle } from "../../utils/style.ts";
 import { waitFor } from "../../utils/wait-for.ts";
-import { getEffectiveTheme } from "../profile/theme/theme-manager.ts";
+import { resolveDaisyTheme } from "../profile/theme/theme-manager.ts";
 import {
   subjectBadgeInfo,
   type LocalSubjectState,
@@ -100,7 +100,7 @@ export async function initProjectPage(): Promise<void> {
 
   main.appendChild(host);
 
-  let theme = await getEffectiveTheme();
+  let theme = await resolveDaisyTheme();
   let subject = await readSubjectBadge(info.slug);
   let activeTab: StatsTab = "outcomes";
   const animate = !(await getConfig("DISABLE_ANIMATIONS"));
@@ -174,19 +174,25 @@ export async function initProjectPage(): Promise<void> {
     if (ok) scheduleRefresh();
   });
 
-  new MutationObserver(() => {
-    void getEffectiveTheme().then((next) => {
+  const refreshTheme = (): void => {
+    void resolveDaisyTheme().then((next) => {
       if (next === theme) return;
       theme = next;
       draw();
     });
-  }).observe(document.documentElement, {
+  };
+
+  new MutationObserver(refreshTheme).observe(document.documentElement, {
     attributes: true,
     attributeFilter: ["class", "data-theme"],
   });
 
   chrome.storage.onChanged.addListener((changes, area) => {
-    if (area !== "local" || !changes.SUBJECT_TRACKER_STATE) return;
+    if (area !== "local") return;
+    if (changes.PROFILE_THEME_PRESET || changes.PROFILE_THEME_CUSTOMS) {
+      refreshTheme();
+    }
+    if (!changes.SUBJECT_TRACKER_STATE) return;
     void readSubjectBadge(info.slug).then((next) => {
       subject = next;
       draw();

@@ -465,7 +465,7 @@ export function projectPageTemplate(
   campusName: string | null,
   activeTab: StatsTab,
   onTab: (tab: StatsTab) => void,
-  theme: "dark" | "light",
+  theme: string,
 ): TemplateResult {
   return html`
     <div class="ft-pp" data-theme=${theme}>

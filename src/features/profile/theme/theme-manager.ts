@@ -49,22 +49,19 @@ function toKebab(str: string): string {
   return str.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`);
 }
 
-export async function applyThemePreset() {
+/**
+ * Loads the active preset's daisyUI CSS into every shadow root and returns the
+ * Intra CSS variables for the document-level theme. Runs on all hosts: the
+ * project page lives on a non-v3 host, where the document theme is untouched.
+ */
+async function syncShadowTheme(): Promise<
+  { valid: false } | { valid: true; isDark: boolean; vars: string[] }
+> {
   const [themeId, customs] = await Promise.all([
     getConfig("PROFILE_THEME_PRESET"),
     getConfig("PROFILE_THEME_CUSTOMS"),
   ]);
   const isDark = document.documentElement.classList.contains("dark");
-
-  let styleEl = document.getElementById(
-    "better-intra-theme-preset",
-  ) as HTMLStyleElement | null;
-
-  if (!styleEl) {
-    styleEl = document.createElement("style");
-    styleEl.id = "better-intra-theme-preset";
-    (document.head || document.documentElement).appendChild(styleEl);
-  }
 
   const mine = (customs ?? []).find((c) => c.id === themeId);
   const builtinMap = themesJson as Record<string, unknown>;
@@ -72,18 +69,16 @@ export async function applyThemePreset() {
     themeId === "dark" || themeId === "light" || !!builtinMap[themeId];
 
   if (!mine && !isBuiltin) {
-    styleEl.textContent = "";
     setCustomThemesEnabled(false);
     setCustomDaisyTheme(null);
-    return;
+    return { valid: false };
   }
 
   setCustomThemesEnabled(true);
 
   const palette = mine ? mine.colors[isDark ? "dark" : "light"] : {};
-  const baseKey = mine || themeId === "dark" || themeId === "light"
-    ? undefined
-    : themeId;
+  const baseKey =
+    mine || themeId === "dark" || themeId === "light" ? undefined : themeId;
   const vars = buildIntraVars(palette, isDark, baseKey);
   const resolved = resolvePalette(palette, isDark, baseKey);
   const composed: ThemePreset = {
@@ -101,21 +96,42 @@ export async function applyThemePreset() {
   THEMES[themeId] = mine ? composed : (original ?? composed);
 
   if (mine) {
-    setCustomDaisyTheme(buildDaisyThemeCss(palette, isDark, undefined, themeId));
+    setCustomDaisyTheme(
+      buildDaisyThemeCss(palette, isDark, undefined, themeId),
+    );
   } else {
     setCustomDaisyTheme(null);
   }
 
-  const selector = isDark
+  return { valid: true, isDark, vars };
+}
+
+export async function applyThemePreset() {
+  let styleEl = document.getElementById(
+    "better-intra-theme-preset",
+  ) as HTMLStyleElement | null;
+
+  if (!styleEl) {
+    styleEl = document.createElement("style");
+    styleEl.id = "better-intra-theme-preset";
+    (document.head || document.documentElement).appendChild(styleEl);
+  }
+
+  const theme = await syncShadowTheme();
+  if (!theme.valid) {
+    styleEl.textContent = "";
+    return;
+  }
+
+  const selector = theme.isDark
     ? "html.dark, html.dark body, html.dark #root"
     : "html:not(.dark), html:not(.dark) body, html:not(.dark) #root";
-  let content = `${selector} {\n    ${vars.join(";\n    ")};\n  }`;
-  if (!isDark) content += `\n${themeLightV3Overrides}`;
+  let content = `${selector} {\n    ${theme.vars.join(";\n    ")};\n  }`;
+  if (!theme.isDark) content += `\n${themeLightV3Overrides}`;
 
   styleEl.textContent = content;
   (document.head || document.documentElement).appendChild(styleEl);
 }
-
 
 function applyTheme(theme: "dark" | "light") {
   const isDark = theme === "dark";
@@ -198,6 +214,17 @@ export async function getEffectiveTheme(): Promise<"dark" | "light"> {
   return (savedTheme as "dark" | "light") || "light";
 }
 
+/**
+ * Resolves the daisyUI theme name to put on a `data-theme` attribute: the
+ * active preset (built-in or custom) when one is selected, otherwise the
+ * effective dark/light mode.
+ */
+export async function resolveDaisyTheme(): Promise<string> {
+  const presetKey = (await getConfig("PROFILE_THEME_PRESET")) || "dark";
+  if (presetKey !== "dark" && presetKey !== "light") return presetKey;
+  return getEffectiveTheme();
+}
+
 async function getCampusSchedule(): Promise<{
   location: CampusLocation | null;
   timezone: string;
@@ -269,6 +296,10 @@ export async function initThemeManager() {
   if (initialTheme !== cachedTheme) {
     applyTheme(initialTheme);
   }
+
+  // On non-v3 hosts (e.g. the redesigned project page) applyTheme never runs
+  // applyThemePreset, so make sure shadow roots still get the preset CSS.
+  void syncShadowTheme();
 
   if ((await getConfig("BETTER_INTRA_THEME")) === "schedule") {
     startScheduleTimer();
