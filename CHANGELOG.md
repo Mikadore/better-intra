@@ -2,6 +2,23 @@
 
 ## [Unreleased]
 
+## [1.11.2] - 2026-10-13
+
+### Features 🎉
+
+- feat(project-page): redesign 42 project page ([c19ff1f](https://github.com/nicopasla/better-intra/commit/c19ff1f))
+
+### Bug fixes 🐛
+
+- fix(calendar): normalize CRLF in ICS descriptions ([06e5118](https://github.com/nicopasla/better-intra/commit/06e5118))
+- fix(theme): load preset daisyUI CSS into shadow roots on non-v3 hosts ([2964f49](https://github.com/nicopasla/better-intra/commit/2964f49))
+- fix(friends): auto-push friends list to worker on add/remove ([3492fa3](https://github.com/nicopasla/better-intra/commit/3492fa3))
+- fix(pace): accept negative days in pace toggle math ([918a880](https://github.com/nicopasla/better-intra/commit/918a880))
+
+### Other Changes 🔄
+
+- docs: note not to bump pwa submodule pointer ([cc0dd25](https://github.com/nicopasla/better-intra/commit/cc0dd25))
+
 ## [1.11.1] - 2026-10-11
 
 ### Bug fixes 🐛
@@ -1385,7 +1402,10 @@
 - chore(profile): Refactor profile visuals ([8aa3ff8](https://github.com/nicopasla/better-intra/commit/8aa3ff8))
 - chore: Update README ([773a0f2](https://github.com/nicopasla/better-intra/commit/773a0f2))
 
-[unreleased]: https://github.com/nicopasla/better-intra/compare/v1.10.0...HEAD
+[unreleased]: https://github.com/nicopasla/better-intra/compare/v1.11.2...HEAD
+[1.11.1]: https://github.com/nicopasla/better-intra/compare/v1.11.1...v1.11.2
+[1.11.1]: https://github.com/nicopasla/better-intra/compare/v1.11.0...v1.11.1
+[1.11.0]: https://github.com/nicopasla/better-intra/compare/v1.10.0...v1.11.0
 [1.10.0]: https://github.com/nicopasla/better-intra/compare/v1.9.1...v1.10.0
 [1.9.1]: https://github.com/nicopasla/better-intra/compare/v1.9.0...v1.9.1
 [1.9.0]: https://github.com/nicopasla/better-intra/compare/v1.8.6...v1.9.0

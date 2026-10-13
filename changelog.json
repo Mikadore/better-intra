@@ -1,6 +1,22 @@
 {
   "entries": [
     {
+      "version": "1.11.2",
+      "date": "2026-10-13",
+      "highlights": [
+        "A redesigned 42 project page — a cleaner layout with participation stats, outcomes, lifespans, flags, marks, files and skills, plus a quick link to your project.",
+        "Your friends list now syncs to the cloud automatically when you add or remove friends.",
+        "Multi-line event descriptions now display correctly in the mobile app."
+      ]
+    },
+    {
+      "version": "1.11.1",
+      "date": "2026-10-11",
+      "highlights": [
+        "Fixed the collapsed dark sidebar so it stays transparent."
+      ]
+    },
+    {
       "version": "1.11.0",
       "highlights": [
         "A brand-new theme picker: choose from built-in themes, community themes, or your own saved looks, all in one place.",
