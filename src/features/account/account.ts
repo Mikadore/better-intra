@@ -358,6 +358,47 @@ export async function syncMyVisuals(visuals: {
 }
 
 /**
+ * A specialized sync function to push the friends list to the cloud.
+ * @param logins The current friends list.
+ */
+export async function syncFriendsList(logins: string[]): Promise<void> {
+  const login = await getCloudLogin();
+  const token = await getConfig("CLOUD_TOKEN");
+  if (!login || !token) return;
+
+  try {
+    const hashedLogin = await hashLogin(login);
+    const res = await fetch(
+      `${WORKER_URL}/api/v1/private/settings?login=${encodeURIComponent(hashedLogin)}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          settings: { FRIENDS_LIST: logins },
+          baseRevision: (await getConfig("CLOUD_REVISION")) ?? null,
+        }),
+      },
+    );
+
+    if (res.status === 409) {
+      await chrome.storage.local.set({ CLOUD_SYNC_CONFLICT: true });
+      return;
+    }
+    if (!(await handleAuthResponse(res))) return;
+    const data = (await res.json().catch(() => ({}))) as { revision?: string };
+    await chrome.storage.local.set({
+      CLOUD_SYNC_CONFLICT: false,
+      ...(data.revision ? { CLOUD_REVISION: data.revision } : {}),
+    });
+  } catch (e) {
+    console.error("Cloud Friends Sync Error:", e);
+  }
+}
+
+/**
  * Fetches the public visual settings for a given user login.
  * @param login The target user's 42 login.
  * @returns A promise that resolves to the user's visual settings, or null on failure.
